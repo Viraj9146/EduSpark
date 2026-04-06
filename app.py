@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
 
-# Create Flask app FIRST
 app = Flask(__name__)
 
 @app.route('/')
@@ -30,7 +29,7 @@ def search():
         ("🧠 Research Articles (Google Scholar)",
          f"https://scholar.google.com/scholar?q={formatted}"),
 
-        ("📚 Free Courses (Coursera Search)",
+        ("🎓 Free Courses (Coursera)",
          f"https://www.coursera.org/search?query={formatted}"),
 
         ("💻 Practice Questions",
@@ -39,5 +38,8 @@ def search():
 
     return render_template("index.html", links=links, subject=subject)
 
+
+# ✅ IMPORTANT FOR RENDER (PRODUCTION SERVER)
 if __name__ == '__main__':
-    app.run(debug=True)
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=10000)
